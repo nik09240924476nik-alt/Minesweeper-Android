@@ -62,8 +62,10 @@ fun AppNav() {
             GameScreen(
                 vm = gameViewModel,
                 onBack = {
-                    // При выходе из игры останавливаем фоновую музыку
-                    gameViewModel.restartGame()
+                    // ИСПРАВЛЕНО: Вместо restartGame() вызываем pauseGameMusic().
+                    // Теперь игра не сбрасывается, кнопка "Продолжить" работает,
+                    // а контекст приложения и темная тема не ломаются!
+                    gameViewModel.pauseGameMusic()
                     navController.navigate(Routes.MENU) {
                         popUpTo(Routes.MENU) { inclusive = true }
                     }

@@ -28,8 +28,9 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
 
     private var timerStarted = false
 
+    // Исправлено: игра считается активной, если таймер был запущен и мы всё еще в процессе игры
     val hasActiveGame: Boolean
-        get() = timer.intValue > 0 && gameState.value == GameState.PLAYING
+        get() = timerStarted && gameState.value == GameState.PLAYING
 
     init {
         refreshBoard()
@@ -93,6 +94,11 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
         timer.intValue = 0
         timerStarted = false
         refreshBoard()
+    }
+
+    // Добавлено: метод останавливает только музыку, сохраняя состояние игры для возможности продолжения
+    fun pauseGameMusic() {
+        soundManager.stopBackgroundMusic()
     }
 
     private fun refreshBoard() {
